@@ -21,9 +21,15 @@ app.listen(port, host, function(){
 });
 */
 var http = require("http");
-
+var express = require("express");
+var app = express();
+app.get('/',function(req, res){
+  
+res.send('kkk');  
+})
+/*
 // create a server
 http.createServer(function(req, res) {
     // on every request, we'll output 'Hello world'
     res.end("Hello world from Cloud9!");
-}).listen(process.env.PORT, process.env.IP);
+}).listen(process.env.PORT, process.env.IP);*/
