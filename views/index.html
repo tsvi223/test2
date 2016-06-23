@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" ng-app>
+  <head>
+    <title>API Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+          <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+              <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+    <style>
+      body {
+        padding-top: 60px;
+      }
+    </style>
+    <script>
+      function ChatController($scope) {
+        var socket = io.connect();
+
+        $scope.messages = [];
+        $scope.roster = [];
+        $scope.name = '';
+        $scope.text = '';
+
+        socket.on('connect', function () {
+          $scope.setName();
+        });
+
+        socket.on('message', function (msg) {
+          $scope.messages.push(msg);
+          $scope.$apply();
+        });
+
+        socket.on('roster', function (names) {
+          $scope.roster = names;
+          $scope.$apply();
+        });
+
+        $scope.send = function send() {
+          console.log('Sending message:', $scope.text);
+          socket.emit('message', $scope.text);
+          $scope.text = '';
+        };
+
+        $scope.setName = function setName() {
+          socket.emit('identify', $scope.name);
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container" ng-controller="ChatController">
+      <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+          <div class="pull-right">
+          
+          </div>
+        </div>
+      </div>
+      <div class="page-header">
+       
+            <form role="form"  action="/get_api-article" method="post">
+              <div class="span2"><input type="text" name = "url" class="input-block-level"  placeholder="Enter URL"></div>
+              <div class="input-append span7">
+               
+                <input type="submit" class="span1 btn btn-primary" value="Send">
+              </div>
+              
+            </form>
+          <div class="row"><h4 > title :  </h4>   {{result.title}}</div>
+            <div class="row"> <h4 >  sub_title :  </h4> {{result.sub_title}}</div>
+              <div class="row"> <h4 > article : </h4> {{result.article}}</div>
+    </div>
+ </div>
+  </body>
+</html>
