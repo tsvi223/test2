@@ -59,17 +59,20 @@
       </div>
       <div class="page-header">
        
-            <form role="form"  action="/get_api-article" method="post">
-              <div class="span2"><input type="text" name = "url" class="input-block-level"  placeholder="Enter URL"></div>
-              <div class="input-append span7">
-               
+            <form role="form"  action="/get_api-article" method="post" dir="rtl">
+              <div class="span2" style="text-align:center;"><input style="width:600px;" type="text" name = "url" class="input-block-level"  placeholder="Enter URL"></div>
+              <div class"row"></div>
+
+
+              <div class="input-append span7" style="padding-top:2%; text-align:center">
+              
                 <input type="submit" class="span1 btn btn-primary" value="Send">
               </div>
               
             </form>
-          <div class="row"><h4 > title :  </h4>   {{result.title}}</div>
-            <div class="row"> <h4 >  sub_title :  </h4> {{result.sub_title}}</div>
-              <div class="row"> <h4 > article : </h4> {{result.article}}</div>
+          <div  style="padding-top:4%" class="row" dir="rtl"><h4 > title :  </h4>   {{result.title}}</div>
+            <div class="row" dir="rtl"> <h4 >  sub_title :  </h4> {{result.sub_title}}</div>
+              <div class="row" dir="rtl"> <h4 > article : </h4> {{result.article}}</div>
     </div>
  </div>
   </body>

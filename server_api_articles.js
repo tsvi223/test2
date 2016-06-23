@@ -7,8 +7,7 @@ var cheerio = require("cheerio");
 var osmosis = require('osmosis');
 var scrape  = require("scrape");
 
-//console.log("ff", request);
-getDeMarker('http://www.themarker.com/wallstreet/LIVE-1.2703370')
+//deMarker
 function getDeMarker(url){
     var d = q.defer();
     var result = {};
@@ -42,7 +41,7 @@ function getDeMarker(url){
   // דה מרקר
 noodle.query(queries).then(function (results) {
                                  
-
+        result.article = "";
          result.title = results.results[0].results.article_head[0];
          result.sub_title = results.results[0].results.article_sub_head[0];
          try {
@@ -59,18 +58,15 @@ noodle.query(queries).then(function (results) {
            console.log(result);
              var to_replace = /\t|\r|\n/g;
           result.article = result.article.replace(to_replace, "");
+          result.article = result.article.replace(" לכתבה המלאה בשליחת תגובה זו הנני מצהיר שאני מסכים/מסכימה עם תנאי השימוש של אתר הארץ תגובתך נקלטה בהצלחה, ותפורסם על פי מדיניות המערכת אנא נסה שנית במועד מאוחר יותר","")
                 return d.resolve(result);
 
         })
 
     return d.promise;
 } 
-        //ynet
 
-    
-   
-       
-     //   getYnet('http://www.ynet.co.il/articles/0,7340,L-4819743,00.html')
+//ynet
 function getYnet(url){
     var d = q.defer();
        var string_final = "" ,  text = ""
@@ -139,8 +135,6 @@ function getYnet(url){
   return d.promise;
 }
 
-
- //getWalla('http://sports.walla.co.il/item/2973107').then(console.log);
 //walla 
 function getWalla(url){
     
@@ -213,7 +207,11 @@ function getWalla(url){
                } 
             
              })
-             result.article = result_article;
+             
+             
+             while(result_article.indexOf("undefined") != -1){
+                result_article = result_article.replace("undefined","")}
+                result.article = result_article;
               console.log(result)
                  return d.resolve(result);
     }); 
