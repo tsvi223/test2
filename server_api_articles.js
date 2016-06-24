@@ -85,6 +85,8 @@ function getYnet(url){
             })
             
             $('div.text14').each(function (div) {   
+                
+            
                 div.children[0].children.forEach(function(di){
                     
                     //console.log(di.name,"  ",di.data);
@@ -92,19 +94,30 @@ function getYnet(url){
                          result_article  = result_article + di.data + " ";
                   try {
                       
-                      if(di.name == 'p' || di.name == 'font'){
+                      if(di.name == 'p' || di.name == 'font'||  di.name == "a" || di.name =="h3"){
 //console.log(di.children[0].data);
+                       
                         di.children.forEach(function(item_child){
+                            
                             try {
                                 if(item_child.name == "font" )//&&result_article.indexOf(item_child.children[0].data) == -1)
-                                    result_article = result_article + item_child.children[0].data + " " ;
-                                   // console.log(item_child.children[0].data);
+                                   item_child.children.forEach(function(ch){
+                                        if(ch.data)
+                                             result_article = result_article + ch.data + " " ;
+                                   })
+                                  
+                                   
+                                    console.log(item_child.children[0].data);
                             } catch (e) {}
-                           if(item_child.data )//&& result_article.indexOf(item_child.data) == -1)
+                            try {
+                                 if(item_child.data )//&& result_article.indexOf(item_child.data) == -1)
                                {  
                                    result_article = result_article + item_child.data + " " ;
                                //console.log(item_child.name," ",item_child.data);
                                }
+                                /* code */
+                            } catch (e) {}
+                          
                            //   if(item_child.name == 'font') {
                              //     console.log(item_child.children[0].data);
                                 
@@ -125,8 +138,9 @@ function getYnet(url){
                 while(result_article.indexOf("&quot;") != -1){
                 result_article = result_article.replace("&quot;","")}
                 result.article = result_article;
+                 console.log(div.children[0].children.length);
                 return d.resolve(result);
-                    console.log(result);
+                   
              })
           
     }); 
@@ -220,6 +234,72 @@ function getWalla(url){
   return d.promise;
 }
 
+function getSport5(url){
+    var d = q.defer();
+    var result = {}
+    var result_article = '';
+    scrape.request(url, function (err, $) {
+            if (err) return console.error(err);
+            $('h1.article-main').each(function(div){
+                result.title =  div.children[0].data;
+            })
+            
+            $('h2.article-sub-main').each(function(div){
+                result.sub_title =  div.children[0].data;
+
+            })
+            
+            $('div.article-content').each(function(div){
+                div.children.forEach(function(di){
+                      
+                 try {
+                      
+                      if(di.name == 'span'){
+                        di.children.forEach(function(item_child){
+                            
+                            try {
+                                if(item_child.data)    result_article  = result_article + item_child.data + " ";
+                                if(item_child.name == "p"  || item_child.name == "br" ||item_child.name == "a")//&&result_article.indexOf(item_child.children[0].data) == -1)
+                               {
+                            
+                                item_child.children.forEach(function(child){
+                                   
+                    
+                                     if(child.data)
+                                         result_article  = result_article + child.data + " ";
+                                     
+                                })
+                             
+                                
+                               }    
+                            } catch (e) {}
+                         
+                        })
+                        
+                          
+                      }
+                
+                 
+                }
+               catch(rr){
+                   
+               } 
+            
+             })
+             
+             
+             while(result_article.indexOf("undefined") != -1){
+                result_article = result_article.replace("undefined","")}
+                result.article = result_article;
+              console.log(result)
+                 return d.resolve(result);
+    }); 
+         
+        })
+
+    return d.promise;
+}
+
 exports.API = function(req, res, next){
     var chec_type = req.body.url.split(".");
     console.log(chec_type);
@@ -235,6 +315,11 @@ exports.API = function(req, res, next){
     }
      if(chec_type[1] == 'walla'){
         getWalla(req.body.url).then(function(result){
+            res.render("index",{result,result});
+        })
+    }
+     if(chec_type[1] == 'sport5'){
+        getSport5(req.body.url).then(function(result){
             res.render("index",{result,result});
         })
     }
