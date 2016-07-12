@@ -85,7 +85,7 @@ function getYnet(url){
             })
             
             $('div.text14').each(function (div) {   
-                
+                result.article = result.article + div.html + " ";
             
                 div.children[0].children.forEach(function(di){
                     
@@ -115,7 +115,7 @@ function getYnet(url){
                                    result_article = result_article + item_child.data + " " ;
                                //console.log(item_child.name," ",item_child.data);
                                }
-                                /* code */
+                              
                             } catch (e) {}
                           
                            //   if(item_child.name == 'font') {
@@ -148,6 +148,7 @@ function getYnet(url){
          
   return d.promise;
 }
+
 
 //walla 
 function getWalla(url){
@@ -232,6 +233,84 @@ function getWalla(url){
          
         })
   return d.promise;
+}
+
+
+//caclcalist
+function getCalcalist(url){
+      var d = q.defer();
+    var result = {}
+    var result_article = '';
+    scrape.request(url, function (err, $) {
+            if (err) return console.error(err);
+            $('h1.ThisArticleTitle').each(function(div){
+                
+               
+                     result.title = result.title +  div.data;
+                   
+               
+            })
+            $('h2.text16g').each(function(div){
+                
+                     result.sub_title = result.title +  div.data;
+                   
+
+            })
+            
+            $('font.text14').each(function(div){
+                div.children.forEach(function(di){
+                try {
+                      
+                      if(di.name == 'p' || di.name == 'font'||  di.name == "a" || di.name =="h3"){
+//console.log(di.children[0].data);
+                       
+                        di.children.forEach(function(item_child){
+                            
+                            try {
+                                if(item_child.name == "font" )//&&result_article.indexOf(item_child.children[0].data) == -1)
+                                   item_child.children.forEach(function(ch){
+                                        if(ch.data)
+                                             result_article = result_article + ch.data + " " ;
+                                   })
+                                  
+                                   
+                                    console.log(item_child.children[0].data);
+                            } catch (e) {}
+                            try {
+                                 if(item_child.data )//&& result_article.indexOf(item_child.data) == -1)
+                               {  
+                                   result_article = result_article + item_child.data + " " ;
+                               //console.log(item_child.name," ",item_child.data);
+                               }
+                                /* code */
+                            } catch (e) {}
+                          
+                           //   if(item_child.name == 'font') {
+                             //     console.log(item_child.children[0].data);
+                                
+                                
+                            //}
+                        
+                        })
+                          
+                      }
+                 
+                  } catch (e) {
+                      
+                  }
+            
+             })
+             
+             
+             while(result_article.indexOf("undefined") != -1){
+                result_article = result_article.replace("undefined","")}
+                result.article = result_article;
+              console.log(result)
+                 return d.resolve(result);
+    }); 
+         
+        })
+    return d.promise;    
 }
 
 function getSport5(url){
@@ -320,6 +399,11 @@ exports.API = function(req, res, next){
     }
      if(chec_type[1] == 'sport5'){
         getSport5(req.body.url).then(function(result){
+            res.render("index",{result,result});
+        })
+    }
+      if(chec_type[1] == 'calcalist'){
+        getCalcalist(req.body.url).then(function(result){
             res.render("index",{result,result});
         })
     }
