@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
      ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
     '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
@@ -20,3 +21,6 @@ This chat example showcases how to use `socket.io` with a static `express` serve
     $ node server.js
 
 Once the server is running, open the project in the shape of 'https://projectname-username.c9.io/'. As you enter your name, watch the Users list (on the left) update. Once you press Enter or Send, the message is shared with all connected clients.
+=======
+jklkl m,kljlk n
+>>>>>>> 649e100b5640970f2f645990a98118e5d3883eb3

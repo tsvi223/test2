@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "chat-example",
   "version": "0.0.0",
   "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
@@ -27,4 +28,15 @@
    "osmosis":"*",
    "scrape":"*"
   }
+=======
+  "name": "p",
+  "version": "0.0.1",
+  "dependencies": {
+    "async": "~0.2.9",
+    "q": "*",
+    "express": "*",
+    "mysql": "*"
+  }
+  
+>>>>>>> 649e100b5640970f2f645990a98118e5d3883eb3
 }
