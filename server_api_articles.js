@@ -384,27 +384,27 @@ exports.API = function(req, res, next){
     console.log(chec_type);
     if(chec_type[1] == 'ynet'){
         getYnet(req.body.url).then(function(result){
-            res.render("index",{result,result});
+            res.render("index",{result: result});
         })
     }
      if(chec_type[1] == 'themarker'){
         getDeMarker(req.body.url).then(function(result){
-            res.render("index",{result,result});
+            res.render("index",{result : result});
         })
     }
      if(chec_type[1] == 'walla'){
         getWalla(req.body.url).then(function(result){
-            res.render("index",{result,result});
+            res.render("index",{result : result});
         })
     }
      if(chec_type[1] == 'sport5'){
         getSport5(req.body.url).then(function(result){
-            res.render("index",{result,result});
+            res.render("index",{result : result});
         })
     }
       if(chec_type[1] == 'calcalist'){
         getCalcalist(req.body.url).then(function(result){
-            res.render("index",{result,result});
+            res.render("index",{result : result});
         })
     }
     
